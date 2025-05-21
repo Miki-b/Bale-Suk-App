@@ -1,0 +1,10 @@
+<resources>
+    <style name="Widget.CircleImage" parent="Widget.MaterialComponents.ShapeableImageView">
+    <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Circle</item>
+    </style>
+
+    <style name="ShapeAppearance.Circle" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>
