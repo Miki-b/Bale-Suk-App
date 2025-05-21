@@ -29,18 +29,7 @@ class CartActivity : AppCompatActivity() {
         binding.cartRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.cartRecyclerView.adapter = cartAdapter
 
-        binding.addButton.setOnClickListener {
-            // Example item to add (you can customize this logic)
-            cartViewModel.addItem(
-                android.example.balesuk.data.CartItem(
-                    productId = "123",
-                    name = "Sample Product",
-                    price = 9.99,
-                    imageUrl = "https://via.placeholder.com/150",
-                    quantity = 1
-                )
-            )
-        }
+
 
         cartViewModel.cartItems.observe(this, Observer { items ->
             cartAdapter.updateItems(items)

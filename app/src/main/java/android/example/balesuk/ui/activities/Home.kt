@@ -8,13 +8,12 @@ import android.example.balesuk.data.CartItem
 import android.example.balesuk.data.Product
 import android.example.balesuk.data.circular_image_text
 import android.os.Bundle
-import android.example.balesuk.ui.activities.CartActivity
-
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import android.example.balesuk.databinding.ActivityHomeBinding
+import android.example.balesuk.ui.CartActivity
 import android.example.balesuk.ui.adapters.circularImageTextAdapter
 import android.example.balesuk.ui.adapters.ProductCardAdapter
 import android.example.balesuk.ui.viewmodel.CartViewModel
