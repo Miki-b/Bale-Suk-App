@@ -9,6 +9,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center"
+        android:background="@color/white"
         android:contentDescription="Cart" />
 
     <TextView

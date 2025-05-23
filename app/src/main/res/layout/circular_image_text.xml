@@ -8,11 +8,11 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/Icon"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:scaleType="centerCrop"
+        style="@style/Widget.CircleImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="center"
-        style="@style/Widget.CircleImage"/>
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/Label"

@@ -1,129 +1,96 @@
 package android.example.balesuk.ui.activities
 
-
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import android.example.balesuk.R
 import android.example.balesuk.data.CartItem
 import android.example.balesuk.data.Product
-import android.example.balesuk.data.circular_image_text
-import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ui.AppBarConfiguration
-import android.example.balesuk.databinding.ActivityHomeBinding
-import android.example.balesuk.ui.adapters.circularImageTextAdapter
+import android.example.balesuk.databinding.ActivityCatagoriesProductListBinding
 import android.example.balesuk.ui.adapters.ProductCardAdapter
 import android.example.balesuk.ui.viewmodel.CartViewModel
 import android.graphics.Color
-import android.util.Log
-import androidx.activity.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 
-class Home : AppCompatActivity() {
+class CatagoriesProductList : AppCompatActivity() {
     private val cartViewModel: CartViewModel by viewModels()
-    private lateinit var circularImageTextRecyclerView: RecyclerView
-    private lateinit var circularImageTextAdapter: circularImageTextAdapter
-    private lateinit var productCardRecyclerView: RecyclerView
+    private lateinit var products: List<Product>
     private lateinit var productCardAdapter: ProductCardAdapter
-    private val context:String="Home"
-    private lateinit var binding: ActivityHomeBinding
-    private lateinit var products: List<Product>  // Store full product list
+    private val context:String="ProductListPage"
+    private lateinit var binding:  ActivityCatagoriesProductListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityCatagoriesProductListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        cartViewModel.cartItems.observe(this) { items ->
-            Log.d("HomeActivity", "Updated cart: $items")
-            Toast.makeText(this, "Cart has ${items.size} item(s)", Toast.LENGTH_SHORT).show()
+
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
+        //setContentView(R.layout.activity_catagories_product_list) // Or your correct layout file
 
+        val recyclerView =binding.GridRecyclerview
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        val navView: BottomNavigationView = binding.navView
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-        )
-
-        // Setup category adapter
-        val categories = listOf(
-            circular_image_text("Clothing", "https://img.freepik.com/free-photo/still-life-spring-wardrobe-switch_23-2150479001.jpg"),
-            circular_image_text("Electronics", "https://img.freepik.com/premium-photo/well-organised-white-office-objects-colorful-background_264197-16469.jpg"),
-            circular_image_text("Foods", "https://img.freepik.com/premium-photo/emergency-survival-food-set-white-kitchen-table_571379-3659.jpg"),
-            circular_image_text("Drinks", "https://img.freepik.com/premium-vector/soft-drinks-liquid-snacks-with-sugar-soda-drinks-vector-colored-hills-steel-bottles_80590-23567.jpg")
-        )
-        circularImageTextAdapter = circularImageTextAdapter(categories) { category ->
-            val intent = Intent(this, CatagoriesProductList::class.java)
-
-            startActivity(intent)
-        }
-        circularImageTextRecyclerView = findViewById(R.id.circularImageTextRecyclerView)
-        circularImageTextRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        // Correct class name and usage
-
-
-// Then set it to RecyclerView
-        circularImageTextRecyclerView.adapter = circularImageTextAdapter
-
-
-        // Products list
         products = listOf(
             Product("1", "Clothing", "https://img.freepik.com/free-photo/still-life-spring-wardrobe-switch_23-2150479001.jpg", 100.0, 0),
             Product("2", "Electronics", "https://img.freepik.com/premium-photo/well-organised-white-office-objects-colorful-background_264197-16469.jpg", 150.0, 0),
             Product("3", "Foods", "https://img.freepik.com/premium-photo/emergency-survival-food-set-white-kitchen-table_571379-3659.jpg", 80.0, 0),
             Product("4", "Drinks", "https://img.freepik.com/premium-vector/soft-drinks-liquid-snacks-with-sugar-soda-drinks-vector-colored-hills-steel-bottles_80590-23567.jpg", 50.0, 0),
-        )
+            Product("5", "Clothing", "https://img.freepik.com/free-photo/still-life-spring-wardrobe-switch_23-2150479001.jpg", 100.0, 0),
+            Product("6", "Electronics", "https://img.freepik.com/premium-photo/well-organised-white-office-objects-colorful-background_264197-16469.jpg", 150.0, 0),
+            Product("7", "Foods", "https://img.freepik.com/premium-photo/emergency-survival-food-set-white-kitchen-table_571379-3659.jpg", 80.0, 0),
+            Product("8", "Drinks", "https://img.freepik.com/premium-vector/soft-drinks-liquid-snacks-with-sugar-soda-drinks-vector-colored-hills-steel-bottles_80590-23567.jpg", 50.0, 0),
+            Product("9", "Clothing", "https://img.freepik.com/free-photo/still-life-spring-wardrobe-switch_23-2150479001.jpg", 100.0, 0),
+            Product("10", "Electronics", "https://img.freepik.com/premium-photo/well-organised-white-office-objects-colorful-background_264197-16469.jpg", 150.0, 0),
+            Product("11", "Foods", "https://img.freepik.com/premium-photo/emergency-survival-food-set-white-kitchen-table_571379-3659.jpg", 80.0, 0),
+            Product("12", "Drinks", "https://img.freepik.com/premium-vector/soft-drinks-liquid-snacks-with-sugar-soda-drinks-vector-colored-hills-steel-bottles_80590-23567.jpg", 50.0, 0),
+            Product("13", "Clothing", "https://img.freepik.com/free-photo/still-life-spring-wardrobe-switch_23-2150479001.jpg", 100.0, 0),
+            Product("14", "Electronics", "https://img.freepik.com/premium-photo/well-organised-white-office-objects-colorful-background_264197-16469.jpg", 150.0, 0),
+            Product("15", "Foods", "https://img.freepik.com/premium-photo/emergency-survival-food-set-white-kitchen-table_571379-3659.jpg", 80.0, 0),
+            Product("16", "Drinks", "https://img.freepik.com/premium-vector/soft-drinks-liquid-snacks-with-sugar-soda-drinks-vector-colored-hills-steel-bottles_80590-23567.jpg", 50.0, 0),
 
-        setupProductRecycler(R.id.productsCardRecyclerView)
-        setupProductRecycler(R.id.productsCardRecyclerView2)
-    }
 
-    private fun setupProductRecycler(recyclerId: Int) {
-        val recyclerView = findViewById<RecyclerView>(recyclerId)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        val adapter = ProductCardAdapter(
+            )
+
+        recyclerView.layoutManager = GridLayoutManager(this, 2) // 2 columns
+        productCardAdapter = ProductCardAdapter(
             products,
             context,
             onAddToCartClicked = { product ->
-            val item = CartItem(
-                productId = product.productId,
-                name = product.productName,
-                price = product.productPrice,
-                imageUrl = product.productimageURL,
-                quantity = 1
-            )
-            cartViewModel.addItem(item)
-        } ,
-                    onClick = { product ->
+                val item = CartItem(
+                    productId = product.productId,
+                    name = product.productName,
+                    price = product.productPrice,
+                    imageUrl = product.productimageURL,
+                    quantity = 1
+                )
+                cartViewModel.addItem(item)
+            } ,
+            onClick = { product ->
                 // Handle click, e.g., navigate to product details
                 // Example:
-                        val intent = Intent(this, ProductDetail::class.java)
+                val intent = Intent(this, ProductDetail::class.java)
 
-                        startActivity(intent)
+                startActivity(intent)
                 Toast.makeText(this, "Clicked: ${product.productName}", Toast.LENGTH_SHORT).show()
             }
         )
+        recyclerView.adapter=productCardAdapter
 
-        recyclerView.adapter = adapter
-
-        if (recyclerId == R.id.productsCardRecyclerView) {
-            productCardAdapter = adapter  // Save reference to first adapter for filtering
-            productCardRecyclerView = recyclerView
-        }
     }
 
     @SuppressLint("RestrictedApi")

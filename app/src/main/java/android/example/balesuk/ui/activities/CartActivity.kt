@@ -1,4 +1,4 @@
-package android.example.balesuk.ui
+package android.example.balesuk.ui.activities
 
 import CartAdapter
 import android.os.Bundle
@@ -21,6 +21,18 @@ class CartActivity : AppCompatActivity() {
 
         binding = ActivityCartBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+            setSupportActionBar(binding.toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+            binding.toolbar.setNavigationOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
+
+
+            // Your existing RecyclerView + ViewModel setup
+
 
         cartAdapter = CartAdapter(emptyList()) { item, newQuantity ->
             cartViewModel.updateQuantity(item.productId, newQuantity)

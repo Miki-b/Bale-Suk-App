@@ -10,7 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 
-class circularImageTextAdapter(private val CircularImageTexts: List<circular_image_text>) :
+class circularImageTextAdapter(private val CircularImageTexts: List<circular_image_text>,
+                               private val onClick: (circular_image_text) -> Unit) :
     RecyclerView.Adapter<circularImageTextAdapter.CircularImageTextViewHolder>() {
 
     inner class CircularImageTextViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,7 +30,12 @@ class circularImageTextAdapter(private val CircularImageTexts: List<circular_ima
             crossfade(true)
         }
         holder.label.text = CircularImageText.label
-    }
+        holder.itemView.setOnClickListener{
+            onClick(CircularImageText)
+        }
+        }
+
+
 
     override fun getItemCount(): Int = CircularImageTexts.size
 }

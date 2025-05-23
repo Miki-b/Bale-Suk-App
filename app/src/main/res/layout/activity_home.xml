@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,18 +12,51 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-
-        android:elevation="4dp">
+        android:elevation="10dp"
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="79dp"
-            android:layout_marginTop="30dp"
-            android:elevation="4dp"
-            app:title="Welcome"
-            app:titleTextColor="@android:color/black" />
+            android:layout_height="86dp"
+            android:background="@drawable/toolbar_background"
+            android:elevation="10dp"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title=" ">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:fontFamily="@font/circularstdmedium500"
+                    android:text="Hello"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/toolbar_title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:fontFamily="@font/circularstdmedium500"
+                    android:text="welcome to Bale-Suk"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Scrollable content below the sticky App Bar -->
@@ -54,21 +86,21 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/circularImageTextRecyclerView"
-                android:layout_width="360dp"
-                android:layout_height="119dp"
+                android:layout_width="374dp"
+                android:layout_height="109dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="44dp"
                 android:layout_marginEnd="16dp"
 
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.052"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/productsCardRecyclerView"
-                android:layout_width="371dp"
-                android:layout_height="273dp"
+                android:layout_width="384dp"
+                android:layout_height="250dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
@@ -80,8 +112,8 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/productsCardRecyclerView2"
-                android:layout_width="391dp"
-                android:layout_height="311dp"
+                android:layout_width="384dp"
+                android:layout_height="264dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"

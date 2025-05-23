@@ -1,9 +1,33 @@
 <resources>
-    <string name="app_name">Bale Suk</string>
+    <string name="app_name">My Form</string>
     <string name="title_activity_home">Home</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Form Strings -->
+    <string name="hint_name">Name</string>
+    <string name="hint_date">Select Date</string>
+    <string name="btn_old">Pick Image (Old)</string>
+    <string name="btn_new">Pick Image (New)</string>
+
+    <!-- Display Strings -->
+    <string name="name_display">Name: %1$s</string>
+    <string name="date_display">Date: %1$s</string>
+    <string name="gender_display">Gender: %1$s</string>
+    <string name="country_display">Country: %1$s</string>
+
+    <!-- Gender and Country Arrays -->
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string-array name="country_array">
+        <item>Ethiopia</item>
+        <item>Kenya</item>
+        <item>Uganda</item>
+        <item>Sudan</item>
+        <item>Somalia</item>
+    </string-array>
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ቅጽ</string>
+    <string name="hint_name">ስም</string>
+    <string name="hint_date">ቀን</string>
+    <string name="btn_old">አሮጌ መንገድ</string>
+    <string name="btn_new">አዲስ መንገድ</string>
+    <string name="name_display">ስም: %1$s</string>
+    <string name="date_display">ቀን: %1$s</string>
+    <string name="gender_display">ፆታ: %1$s</string>
+    <string name="country_display">ሀገር: %1$s</string>
+    <string-array name="gender_array">
+        <item>ወንድ</item>
+        <item>ሴት</item>
+    </string-array>
+    <string-array name="country_array">
+        <item>ኢትዮጵያ</item>
+        <item>ኬንያ</item>
+        <item>ዩጋንዳ</item>
+        <item>ሱዳን</item>
+        <item>ሶማሌ</item>
+    </string-array>
+</resources>
