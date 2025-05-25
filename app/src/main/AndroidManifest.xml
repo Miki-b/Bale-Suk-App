@@ -18,7 +18,7 @@
             android:name="android.example.forms.DisplayActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.Home"
+            android:name=".ui.activities.Forms"
             android:exported="false" />
         <activity
             android:name=".ui.activities.ProductDetail"
@@ -32,7 +32,7 @@
              />
         <activity android:name=".ui.activities.CartActivity" />
         <activity
-            android:name=".ui.activities.Forms"
+            android:name=".ui.activities.Home"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

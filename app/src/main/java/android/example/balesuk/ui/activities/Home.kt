@@ -150,7 +150,7 @@ class Home : AppCompatActivity() {
             val actionView = cartItem?.actionView
             val cartBadge = actionView?.findViewById<TextView>(R.id.cart_badge)
             val cartIcon = actionView?.findViewById<ImageView>(R.id.cart_icon)
-            cartIcon?.load("https://drive.google.com/file/d/1V_pF43mHtSJRsfh0L_Hpa4N_9Uhi_N_t/view?usp=sharing")
+            cartIcon?.load("https://www.reshot.com/preview-assets/icons/WFDT3CVZMJ/shopping-cart-WFDT3CVZMJ.svg")
             cartViewModel.cartItems.observe(this) { items ->
                 cartBadge?.text = items.size.toString()
                 cartBadge?.visibility = if (items.isNotEmpty()) View.VISIBLE else View.GONE

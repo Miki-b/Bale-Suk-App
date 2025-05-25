@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="86dp"
+        android:layout_height="?attr/actionBarSize"
         android:elevation="10dp"
         android:theme="?attr/actionBarTheme"
         android:background="?attr/colorPrimary"
@@ -31,30 +31,120 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:fontFamily="@font/circularstdmedium500"
-                android:text="Hello"
+                android:text="Product Detail"
                 android:textColor="@android:color/white"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/toolbar_title2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:fontFamily="@font/circularstdmedium500"
-                android:text="welcome to Bale-Suk"
-                android:textColor="@android:color/white"
-                android:textSize="15sp"
-                android:textStyle="italic" />
+
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/imageSlider"
+
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="80dp">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/imageSlider"
+                android:layout_width="410dp"
+                android:layout_height="285dp"
+                android:layout_marginTop="64dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/productName"
+                android:layout_width="172dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/circularstdmedium500"
+                android:text="Product Name"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
+
+            <TextView
+                android:id="@+id/productPrice"
+                android:layout_width="136dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="52dp"
+                android:fontFamily="@font/circularstdmedium500"
+                android:text="Price"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
+
+            <TextView
+                android:id="@+id/productDescription"
+                android:layout_width="377dp"
+                android:layout_height="92dp"
+                android:layout_marginTop="84dp"
+                android:fontFamily="@font/circularstdmedium500"
+                android:lineSpacingExtra="4dp"
+                android:text="This is a sample description of the product. It can be multiple lines long depending on the text content."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
+
+            <Spinner
+                android:id="@+id/spinner_size"
+                android:layout_width="374dp"
+                android:layout_height="55dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/spinner_background"
+                android:padding="12dp"
+                android:spinnerMode="dropdown"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/productDescription" />
+
+            <Spinner
+                android:id="@+id/spinner_color"
+                android:layout_width="374dp"
+                android:layout_height="55dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/spinner_background"
+                android:padding="12dp"
+                android:spinnerMode="dropdown"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_size" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="423dp"
+        android:layout_height="93dp"
+        android:layout_alignParentBottom="true"
+
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_add_to_bag"
+            android:layout_width="378dp"
+            android:layout_height="66dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:text="Add to Cart"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+
+    <!-- Bottom Navigation Bar -->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
