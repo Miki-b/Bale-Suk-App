@@ -15,10 +15,10 @@
         android:theme="@style/Theme.BaleSuk"
         tools:targetApi="31">
         <activity
-            android:name="android.example.forms.DisplayActivity"
+            android:name=".ui.WorkoutList"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.Forms"
+            android:name=".ui.activities.Home"
             android:exported="false" />
         <activity
             android:name=".ui.activities.ProductDetail"
@@ -28,11 +28,10 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"
-             />
+            android:exported="false" />
         <activity android:name=".ui.activities.CartActivity" />
         <activity
-            android:name=".ui.activities.Home"
+            android:name=".ui.activities.AddProduct"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

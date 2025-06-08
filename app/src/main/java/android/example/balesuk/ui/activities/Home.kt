@@ -90,6 +90,12 @@ class Home : AppCompatActivity() {
 
         setupProductRecycler(R.id.productsCardRecyclerView)
         setupProductRecycler(R.id.productsCardRecyclerView2)
+
+        val name=intent.getStringExtra("name");
+        val age=intent.getIntExtra("Age",1);
+        intent.putExtra("school","Addis Ababa University")
+        setResult( RESULT_OK,intent)
+//        finish()
     }
 
     private fun setupProductRecycler(recyclerId: Int) {
