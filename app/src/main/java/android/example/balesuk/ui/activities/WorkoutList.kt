@@ -1,4 +1,4 @@
-package android.example.balesuk.ui
+package android.example.balesuk.ui.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

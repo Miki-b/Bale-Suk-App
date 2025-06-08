@@ -15,7 +15,7 @@
         android:theme="@style/Theme.BaleSuk"
         tools:targetApi="31">
         <activity
-            android:name=".ui.WorkoutList"
+            android:name=".ui.activities.WorkoutList"
             android:exported="false" />
         <activity
             android:name=".ui.activities.Home"

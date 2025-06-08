@@ -7,3 +7,4 @@ class Product(
     val productPrice: Double,
     val minProductQuantity:Int
 )
+
