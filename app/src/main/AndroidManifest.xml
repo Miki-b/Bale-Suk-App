@@ -10,15 +10,26 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BaleSuk"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activities.OrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.Register"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.Home"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.WorkoutList"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.Home"
+            android:name=".ui.activities.AddProduct"
             android:exported="false" />
         <activity
             android:name=".ui.activities.ProductDetail"
@@ -31,7 +42,7 @@
             android:exported="false" />
         <activity android:name=".ui.activities.CartActivity" />
         <activity
-            android:name=".ui.activities.AddProduct"
+            android:name=".ui.activities.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

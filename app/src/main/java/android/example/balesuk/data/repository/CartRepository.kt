@@ -1,6 +1,6 @@
 package android.example.balesuk.data.repository
 
-import android.example.balesuk.data.CartItem
+import android.example.balesuk.model.CartItem
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 

@@ -2,6 +2,7 @@ package android.example.balesuk.ui.adapters
 
 import android.example.balesuk.R
 import android.example.balesuk.data.circular_image_text
+import android.example.balesuk.data.models.Catagory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 
-class circularImageTextAdapter(private val CircularImageTexts: List<circular_image_text>,
-                               private val onClick: (circular_image_text) -> Unit) :
+class circularImageTextAdapter(private val CircularImageTexts: List<Catagory>,
+                               private val onClick: (Catagory) -> Unit) :
     RecyclerView.Adapter<circularImageTextAdapter.CircularImageTextViewHolder>() {
 
     inner class CircularImageTextViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,7 +30,7 @@ class circularImageTextAdapter(private val CircularImageTexts: List<circular_ima
         holder.icon.load(CircularImageText.imageURL) {
             crossfade(true)
         }
-        holder.label.text = CircularImageText.label
+        holder.label.text = CircularImageText.name
         holder.itemView.setOnClickListener{
             onClick(CircularImageText)
         }

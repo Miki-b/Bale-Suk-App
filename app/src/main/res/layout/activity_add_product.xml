@@ -1,34 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.AddProduct">
+    android:orientation="vertical"
+    android:background="@android:color/white">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="160dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="456dp" />
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="10dp"
+        android:background="?attr/colorPrimary"
+        android:theme="?attr/actionBarTheme">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="156dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="364dp" />
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/circularstdmedium500"
+            android:text="Product Detail"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:padding="16dp">
 
-    <ListView
-        android:id="@+id/list_item"
-        android:layout_width="409dp"
-        android:layout_height="225dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Toolbar -->
+<!--            <TextView-->
+<!--                android:id="@+id/toolbar_title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Add New Product"-->
+<!--                android:textSize="24sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:fontFamily="@font/circularstdmedium500"-->
+<!--                android:textColor="?attr/colorPrimary"-->
+<!--                android:layout_marginBottom="16dp" />-->
+
+            <!-- Primary Image -->
+            <ImageView
+                android:id="@+id/imgPrimary"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+
+                android:contentDescription="Primary Product Image" />
+
+            <!-- Additional Images -->
+            <Button
+                android:id="@+id/btnSelectImages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Additional Images"
+                android:textColor="?attr/colorPrimary"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:id="@+id/selectedImagesContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="4dp" />
+            </HorizontalScrollView>
+
+            <!-- Form Fields -->
+            <!-- Label + Field combo -->
+            <TextView style="@style/FormLabel" android:text="Product Name" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editProductName"
+                style="@style/FormField" />
+
+            <TextView style="@style/FormLabel" android:text="Description" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editDescription"
+                style="@style/FormField"
+                android:minLines="3"
+                android:maxLines="5"
+                android:gravity="top" />
+
+            <TextView style="@style/FormLabel" android:text="Category" />
+            <Spinner
+                android:id="@+id/spinnerCategory"
+                style="@style/FormSpinner" />
+
+            <TextView style="@style/FormLabel" android:text="Sub-Category" />
+            <Spinner
+                android:id="@+id/spinnerSubCategory"
+                style="@style/FormSpinner" />
+
+            <TextView style="@style/FormLabel" android:text="Unit Price" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editPrice"
+                style="@style/FormField"
+                android:inputType="numberDecimal" />
+
+            <TextView style="@style/FormLabel" android:text="Unit Type" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editUnitType"
+                style="@style/FormField" />
+
+            <TextView style="@style/FormLabel" android:text="Minimum Order Quantity" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editMOQ"
+                style="@style/FormField"
+                android:inputType="number" />
+
+            <TextView style="@style/FormLabel" android:text="Available Stock" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editStock"
+                style="@style/FormField"
+                android:inputType="number" />
+
+            <TextView style="@style/FormLabel" android:text="Weight (kg)" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editWeight"
+                style="@style/FormField"
+                android:inputType="numberDecimal" />
+
+            <!-- Dimensions -->
+            <TextView style="@style/FormLabel" android:text="Dimensions (cm)" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editLength"
+                    style="@style/FormFieldSmall"
+                    android:inputType="numberDecimal"
+                    android:layout_weight="1"
+                    android:hint="L" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editWidth"
+                    style="@style/FormFieldSmall"
+                    android:inputType="numberDecimal"
+                    android:layout_weight="1"
+                    android:hint="W" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editHeight"
+                    style="@style/FormFieldSmall"
+                    android:inputType="numberDecimal"
+                    android:layout_weight="1"
+                    android:hint="H" />
+            </LinearLayout>
+
+            <TextView style="@style/FormLabel" android:text="Tags (comma-separated)" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTags"
+                style="@style/FormField" />
+
+            <!-- Switch -->
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchVisibility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Visible to Retailers"
+                android:textColor="?attr/colorPrimary"
+                android:checked="true"
+                android:layout_marginTop="12dp" />
+
+            <!-- Submit Button -->
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Product"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/circularstdmedium500"
+                android:backgroundTint="?attr/colorPrimary"
+                android:layout_marginTop="24dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

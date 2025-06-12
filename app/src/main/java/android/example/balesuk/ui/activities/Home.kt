@@ -1,174 +1,164 @@
 package android.example.balesuk.ui.activities
 
-
+import ProductViewModel
+import Products
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.example.balesuk.R
-import android.example.balesuk.data.CartItem
-import android.example.balesuk.data.Product
-import android.example.balesuk.data.circular_image_text
-import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ui.AppBarConfiguration
+import android.example.balesuk.model.CartItem
+import android.example.balesuk.data.models.Catagory
+
 import android.example.balesuk.databinding.ActivityHomeBinding
-import android.example.balesuk.ui.adapters.circularImageTextAdapter
 import android.example.balesuk.ui.adapters.ProductCardAdapter
+import android.example.balesuk.ui.adapters.circularImageTextAdapter
 import android.example.balesuk.ui.viewmodel.CartViewModel
 import android.graphics.Color
-import android.util.Log
+import android.os.Bundle
+import android.view.*
+import android.widget.*
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
-import coil.load
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Home : AppCompatActivity() {
     private val cartViewModel: CartViewModel by viewModels()
+    private val productViewModel: ProductViewModel by viewModels()
+    private lateinit var  catagory:Catagory
+    private lateinit var binding: ActivityHomeBinding
     private lateinit var circularImageTextRecyclerView: RecyclerView
     private lateinit var circularImageTextAdapter: circularImageTextAdapter
-    private lateinit var productCardRecyclerView: RecyclerView
     private lateinit var productCardAdapter: ProductCardAdapter
-    private val context:String="Home"
-    private lateinit var binding: ActivityHomeBinding
-    private lateinit var products: List<Product>  // Store full product list
+    private lateinit var productCardRecyclerView: RecyclerView
+
+    private var allProducts: List<Products> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        cartViewModel.cartItems.observe(this) { items ->
-            Log.d("HomeActivity", "Updated cart: $items")
-            Toast.makeText(this, "Cart has ${items.size} item(s)", Toast.LENGTH_SHORT).show()
+        setSupportActionBar(findViewById(R.id.toolbar))
+
+        setupCategoryRecycler()
+        setupProductRecycler()
+        observeProductViewModel()
+
+        productViewModel.getAllProducts()
+
+        val name = intent.getStringExtra("name")
+        val age = intent.getIntExtra("Age", 1)
+        intent.putExtra("school", "Addis Ababa University")
+        setResult(RESULT_OK, intent)
+
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    // Already on Home
+                    true
+                }
+                R.id.navigation_dashboard -> {
+                    startActivity(Intent(this, Login::class.java))
+                    true
+                }
+                R.id.navigation_notifications -> {
+                    startActivity(Intent(this, Login::class.java))
+                    true
+                }
+                else -> false
+            }
         }
 
+    }
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        val navView: BottomNavigationView = binding.navView
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-        )
-
-        // Setup category adapter
+    private fun setupCategoryRecycler() {
         val categories = listOf(
-            circular_image_text("Clothing", "https://img.freepik.com/free-photo/still-life-spring-wardrobe-switch_23-2150479001.jpg"),
-            circular_image_text("Electronics", "https://img.freepik.com/premium-photo/well-organised-white-office-objects-colorful-background_264197-16469.jpg"),
-            circular_image_text("Foods", "https://img.freepik.com/premium-photo/emergency-survival-food-set-white-kitchen-table_571379-3659.jpg"),
-            circular_image_text("Drinks", "https://img.freepik.com/premium-vector/soft-drinks-liquid-snacks-with-sugar-soda-drinks-vector-colored-hills-steel-bottles_80590-23567.jpg")
+            Catagory(1,"Clothing", "","","https://img.freepik.com/free-photo/still-life-spring-wardrobe-switch_23-2150479001.jpg"),
+            Catagory(2,"Electronics", "","","https://img.freepik.com/premium-photo/well-organised-white-office-objects-colorful-background_264197-16469.jpg"),
+            Catagory(3,"Foods","","", "https://img.freepik.com/premium-photo/emergency-survival-food-set-white-kitchen-table_571379-3659.jpg"),
+            Catagory(4,"Drinks", "","","https://img.freepik.com/premium-vector/soft-drinks-liquid-snacks-with-sugar-soda-drinks-vector-colored-hills-steel-bottles_80590-23567.jpg")
         )
         circularImageTextAdapter = circularImageTextAdapter(categories) { category ->
             val intent = Intent(this, CatagoriesProductList::class.java)
-
+            intent.putExtra("category_slug", category.id.toString()) // use slug or id as needed
             startActivity(intent)
         }
+
+
+
+
         circularImageTextRecyclerView = findViewById(R.id.circularImageTextRecyclerView)
         circularImageTextRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        // Correct class name and usage
-
-
-// Then set it to RecyclerView
         circularImageTextRecyclerView.adapter = circularImageTextAdapter
-
-
-        // Products list
-        products = listOf(
-            Product("1", "Clothing", "https://img.freepik.com/free-photo/still-life-spring-wardrobe-switch_23-2150479001.jpg", 100.0, 0),
-            Product("2", "Electronics", "https://img.freepik.com/premium-photo/well-organised-white-office-objects-colorful-background_264197-16469.jpg", 150.0, 0),
-            Product("3", "Foods", "https://img.freepik.com/premium-photo/emergency-survival-food-set-white-kitchen-table_571379-3659.jpg", 80.0, 0),
-            Product("4", "Drinks", "https://img.freepik.com/premium-vector/soft-drinks-liquid-snacks-with-sugar-soda-drinks-vector-colored-hills-steel-bottles_80590-23567.jpg", 50.0, 0),
-        )
-
-        setupProductRecycler(R.id.productsCardRecyclerView)
-        setupProductRecycler(R.id.productsCardRecyclerView2)
-
-        val name=intent.getStringExtra("name");
-        val age=intent.getIntExtra("Age",1);
-        intent.putExtra("school","Addis Ababa University")
-        setResult( RESULT_OK,intent)
-//        finish()
     }
 
-    private fun setupProductRecycler(recyclerId: Int) {
-        val recyclerView = findViewById<RecyclerView>(recyclerId)
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        val adapter = ProductCardAdapter(
-            products,
-            context,
-            onAddToCartClicked = { product ->
-            val item = CartItem(
-                productId = product.productId,
-                name = product.productName,
-                price = product.productPrice,
-                imageUrl = product.productimageURL,
-                quantity = 1
-            )
-            cartViewModel.addItem(item)
-        } ,
-                    onClick = { product ->
-                // Handle click, e.g., navigate to product details
-                // Example:
-                        val intent = Intent(this, ProductDetail::class.java)
+    private fun setupProductRecycler() {
+        productCardRecyclerView = findViewById(R.id.productsCardRecyclerView)
+        productCardRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-                        startActivity(intent)
-                Toast.makeText(this, "Clicked: ${product.productName}", Toast.LENGTH_SHORT).show()
+        productCardAdapter = ProductCardAdapter(
+            productList = listOf(),
+            Screen = "Home",
+            onAddToCartClicked = { product ->
+                val item = CartItem(
+                    productId = product.id.toString(),
+                    name = product.name,
+                    price = product.price,
+                    imageUrl = product.images?.firstOrNull()?.path ?: "",
+                    quantity = 1
+
+                )
+                cartViewModel.addItem(item)
+            },
+            onClick = { product ->
+                val intent = Intent(this, ProductDetail::class.java)
+                intent.putExtra("product", product)
+                startActivity(intent)
+                Toast.makeText(this, "Clicked: ${product.name}", Toast.LENGTH_SHORT).show()
             }
         )
+        productCardRecyclerView.adapter = productCardAdapter
+    }
 
-        recyclerView.adapter = adapter
+    private fun observeProductViewModel() {
+        productViewModel.products.observe(this, Observer { productList ->
+            allProducts = productList ?: listOf()
+            productCardAdapter.updateProducts(allProducts)
+        })
 
-        if (recyclerId == R.id.productsCardRecyclerView) {
-            productCardAdapter = adapter  // Save reference to first adapter for filtering
-            productCardRecyclerView = recyclerView
-        }
+        productViewModel.error.observe(this, Observer { error ->
+            error?.let {
+                Toast.makeText(this, "Error: $it", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        productViewModel.loading.observe(this, Observer { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        })
     }
 
     @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         menu?.let {
-
             val searchItem = it.findItem(R.id.action_search)
             val searchView = searchItem.actionView as? SearchView
             searchView?.isIconified = false
 
-            // Configure searchView here
-            searchView?.let {
-                val searchPlate = it.findViewById<View>(androidx.appcompat.R.id.search_plate)
-                searchPlate?.setBackgroundResource(R.drawable.rounded_search_background)
+            val searchPlate = searchView?.findViewById<View>(androidx.appcompat.R.id.search_plate)
+            searchPlate?.setBackgroundResource(R.drawable.rounded_search_background)
 
-                // Optional: tweak EditText if you want to round the input field as well
-                val searchEditText = it.findViewById<androidx.appcompat.widget.SearchView.SearchAutoComplete>(
-                    androidx.appcompat.R.id.search_src_text
-                )
-                searchEditText?.setBackgroundColor(android.graphics.Color.TRANSPARENT)
-            }
-            val cartItem = menu?.findItem(R.id.action_cart)
-            val actionView = cartItem?.actionView
-            val cartBadge = actionView?.findViewById<TextView>(R.id.cart_badge)
-            val cartIcon = actionView?.findViewById<ImageView>(R.id.cart_icon)
-            cartIcon?.load("https://www.reshot.com/preview-assets/icons/WFDT3CVZMJ/shopping-cart-WFDT3CVZMJ.svg")
-            cartViewModel.cartItems.observe(this) { items ->
-                cartBadge?.text = items.size.toString()
-                cartBadge?.visibility = if (items.isNotEmpty()) View.VISIBLE else View.GONE
-            }
-
-            cartBadge?.visibility = View.VISIBLE
-
-            val searchAutoComplete = searchView?.findViewById<androidx.appcompat.widget.SearchView.SearchAutoComplete>(
+            val searchEditText = searchView?.findViewById<androidx.appcompat.widget.SearchView.SearchAutoComplete>(
                 androidx.appcompat.R.id.search_src_text
             )
-            searchAutoComplete?.setHintTextColor(Color.GRAY)         // Hint color
-            searchAutoComplete?.setTextColor(Color.BLACK)            // Input text color
+            searchEditText?.setBackgroundColor(Color.TRANSPARENT)
+            searchEditText?.setHintTextColor(Color.GRAY)
+            searchEditText?.setTextColor(Color.BLACK)
 
             searchView?.queryHint = "Search products..."
             searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -183,6 +173,14 @@ class Home : AppCompatActivity() {
                 }
             })
 
+            val cartItem = it.findItem(R.id.action_cart)
+            val actionView = cartItem?.actionView
+            val cartBadge = actionView?.findViewById<TextView>(R.id.cart_badge)
+            cartViewModel.cartItems.observe(this) { items ->
+                cartBadge?.text = items.size.toString()
+                cartBadge?.visibility = if (items.isNotEmpty()) View.VISIBLE else View.GONE
+            }
+
             actionView?.setOnClickListener {
                 onOptionsItemSelected(cartItem)
             }
@@ -193,8 +191,7 @@ class Home : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_cart -> {
-                val intent = Intent(this, CartActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, CartActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -202,9 +199,10 @@ class Home : AppCompatActivity() {
     }
 
     private fun performSearch(query: String) {
-        val filtered = products.filter {
-            it.productName.contains(query, ignoreCase = true)
-        }
-        productCardAdapter.updateProducts(filtered)
+//        val filtered = allProducts.filter {
+//            it.name.contains(query, ignoreCase = true)
+//        }
+        productViewModel.getAllProducts(null,query)
+
     }
 }

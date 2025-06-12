@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -57,7 +58,9 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.nav.fragment.ktx)
     implementation(libs.nav.ui.ktx)
-
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.okhttp.logging)
     //kapt(libs.glide.compiler) // only if you use Glide's annotation processor (recommended)
 
 

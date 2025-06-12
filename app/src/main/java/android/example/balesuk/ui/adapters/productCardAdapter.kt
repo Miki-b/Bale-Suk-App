@@ -1,8 +1,8 @@
 package android.example.balesuk.ui.adapters
 
+import Products
 import android.example.balesuk.R
-import android.example.balesuk.data.Product
-import android.example.balesuk.data.circular_image_text
+import android.example.balesuk.data.models.Product
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 
 class ProductCardAdapter(
-    private var productList: List<Product>,
+    private var productList: List<Products>,
     private val Screen:String,
-    private val onAddToCartClicked: (Product) -> Unit,
-    private val onClick: (Product) -> Unit
+    private val onAddToCartClicked: (Products) -> Unit,
+    private val onClick: (Products) -> Unit
 ) : RecyclerView.Adapter<ProductCardAdapter.ProductCardViewHolder>() {
 
     inner class ProductCardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -44,12 +44,15 @@ class ProductCardAdapter(
             itemView.findViewById(R.id.ProductaddToCartButton)
         }
 
-        fun bind(product: Product) {
-            productImage.load(product.productimageURL) {
-                crossfade(true)
+        fun bind(product: Products) {
+            product.images?.firstOrNull()?.path?.let { url ->
+                productImage.load(url) {
+                    crossfade(true)
+                }
             }
-            productName.text = product.productName
-            productPrice.text = product.productPrice.toString()
+
+            productName.text = product.name
+            productPrice.text = product.price.toString()
 
             addToCartButton.setOnClickListener {
                 onAddToCartClicked(product)
@@ -74,7 +77,7 @@ class ProductCardAdapter(
 
     override fun getItemCount(): Int = productList.size
 
-    fun updateProducts(newProducts: List<Product>) {
+    fun updateProducts(newProducts: List<Products>) {
         productList = newProducts
         notifyDataSetChanged()
     }

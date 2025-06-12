@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.ProductDetail">
 
-
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -15,10 +15,9 @@
         android:elevation="10dp"
         android:theme="?attr/actionBarTheme"
         android:background="?attr/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title=" ">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -29,122 +28,117 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
                 android:fontFamily="@font/circularstdmedium500"
                 android:text="Product Detail"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
-
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
+    <!-- Scrollable Content -->
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_bar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="80dp">
+            android:padding="16dp">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/imageSlider"
-                android:layout_width="410dp"
-                android:layout_height="285dp"
-                android:layout_marginTop="64dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/productName"
-                android:layout_width="172dp"
-                android:layout_height="35dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/circularstdmedium500"
                 android:text="Product Name"
                 android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/imageSlider"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/productPrice"
-                android:layout_width="136dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="52dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/circularstdmedium500"
                 android:text="Price"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/productName"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/productDescription"
-                android:layout_width="377dp"
-                android:layout_height="92dp"
-                android:layout_marginTop="84dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:fontFamily="@font/circularstdmedium500"
                 android:lineSpacingExtra="4dp"
-                android:text="This is a sample description of the product. It can be multiple lines long depending on the text content."
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="This is a sample description of the product."
+                app:layout_constraintTop_toBottomOf="@id/productPrice"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageSlider" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <Spinner
                 android:id="@+id/spinner_size"
-                android:layout_width="374dp"
+                android:layout_width="0dp"
                 android:layout_height="55dp"
-                android:layout_margin="16dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/spinner_background"
                 android:padding="12dp"
-                android:spinnerMode="dropdown"
+                app:layout_constraintTop_toBottomOf="@id/productDescription"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/productDescription" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <Spinner
                 android:id="@+id/spinner_color"
-                android:layout_width="374dp"
+                android:layout_width="0dp"
                 android:layout_height="55dp"
-                android:layout_margin="16dp"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/spinner_background"
                 android:padding="12dp"
-                android:spinnerMode="dropdown"
+                app:layout_constraintTop_toBottomOf="@id/spinner_size"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_size" />
-
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
+    <!-- Bottom Button -->
     <LinearLayout
         android:id="@+id/bottom_bar"
-        android:layout_width="423dp"
-        android:layout_height="93dp"
-        android:layout_alignParentBottom="true"
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <Button
             android:id="@+id/btn_add_to_bag"
-            android:layout_width="378dp"
-            android:layout_height="66dp"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
             android:backgroundTint="?attr/colorPrimary"
             android:text="Add to Cart"
             android:textColor="@android:color/white" />
     </LinearLayout>
-
-
-    <!-- Bottom Navigation Bar -->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

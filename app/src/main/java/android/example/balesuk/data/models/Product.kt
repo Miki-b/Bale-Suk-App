@@ -1,4 +1,4 @@
-package android.example.balesuk.data
+package android.example.balesuk.data.models
 
 class Product(
     val productId: String,

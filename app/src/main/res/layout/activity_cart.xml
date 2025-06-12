@@ -64,30 +64,29 @@
         android:layout_marginBottom="48dp"
         android:text="Total: $0.00"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
+        app:layout_constraintBottom_toTopOf="@+id/check_out"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/bottom_bar"
-        android:layout_width="423dp"
-        android:layout_height="93dp"
-        android:layout_alignParentBottom="true"
 
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="16dp"
-
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/check_out"
+        android:layout_width="370dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="36dp"
+        android:fontFamily="@font/circularstdmedium500"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:text="Check Out"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+         />
 
-        <Button
-            android:id="@+id/btn_add_to_bag"
-            android:layout_width="378dp"
-            android:layout_height="66dp"
-            android:backgroundTint="?attr/colorPrimary"
-            android:text="Check out"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
