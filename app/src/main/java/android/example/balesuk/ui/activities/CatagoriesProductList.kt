@@ -1,29 +1,16 @@
 package android.example.balesuk.ui.activities
 
-import ProductImage
 import ProductViewModel
-import Products
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.example.balesuk.R
 import android.example.balesuk.model.CartItem
-import android.example.balesuk.data.models.Product
 import android.example.balesuk.databinding.ActivityCatagoriesProductListBinding
 import android.example.balesuk.ui.adapters.ProductCardAdapter
-import android.example.balesuk.ui.viewmodel.CartViewModel
-import android.graphics.Color
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.example.balesuk.viewmodel.CartViewModel
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
-import coil.load
 
 class CatagoriesProductList : AppCompatActivity() {
     private val cartViewModel: CartViewModel by viewModels()

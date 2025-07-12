@@ -29,19 +29,37 @@ class Register : AppCompatActivity() {
             val email = binding.editEmail.text.toString()
             val password = binding.editPassword.text.toString()
             val confirmPassword=binding.editConfirmPassword.text.toString()
-            if (validateInputs(fullName, email, password)) {
+            if (validateInputs(fullName, email, password,confirmPassword)) {
                 registerUser(fullName, email, password,confirmPassword)
             }
         }
     }
 
-    private fun validateInputs(name: String, email: String, password: String): Boolean {
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+    private fun validateInputs(name: String, email: String, password: String, confirmPassword: String): Boolean {
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             showToast("Please fill in all fields")
             return false
         }
+
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        if (!email.matches(emailPattern.toRegex())) {
+            showToast("Please enter a valid email address")
+            return false
+        }
+
+        if (password.length < 6) {
+            showToast("Password must be at least 6 characters")
+            return false
+        }
+
+        if (password != confirmPassword) {
+            showToast("Passwords do not match")
+            return false
+        }
+
         return true
     }
+
 
     private fun registerUser(name: String, email: String, password: String, confirmPassword: String) {
         lifecycleScope.launch {

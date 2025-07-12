@@ -4,7 +4,7 @@ import CartAdapter
 import android.content.Intent
 import android.example.balesuk.databinding.ActivityCartBinding
 import android.example.balesuk.model.CartItem
-import android.example.balesuk.ui.viewmodel.CartViewModel
+import android.example.balesuk.viewmodel.CartViewModel
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity

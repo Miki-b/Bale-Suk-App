@@ -5,13 +5,14 @@ import Products
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.example.balesuk.R
+import android.example.balesuk.data.api.SessionManager
 import android.example.balesuk.model.CartItem
 import android.example.balesuk.data.models.Catagory
 
 import android.example.balesuk.databinding.ActivityHomeBinding
 import android.example.balesuk.ui.adapters.ProductCardAdapter
 import android.example.balesuk.ui.adapters.circularImageTextAdapter
-import android.example.balesuk.ui.viewmodel.CartViewModel
+import android.example.balesuk.viewmodel.CartViewModel
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -22,7 +23,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import coil.load
+import coil.transform.RoundedCornersTransformation
 
 class Home : AppCompatActivity() {
     private val cartViewModel: CartViewModel by viewModels()
@@ -33,6 +35,8 @@ class Home : AppCompatActivity() {
     private lateinit var circularImageTextAdapter: circularImageTextAdapter
     private lateinit var productCardAdapter: ProductCardAdapter
     private lateinit var productCardRecyclerView: RecyclerView
+    private lateinit var newProductCardAdapter: ProductCardAdapter
+    private lateinit var newProductCardRecyclerView: RecyclerView
 
     private var allProducts: List<Products> = listOf()
 
@@ -40,13 +44,17 @@ class Home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(findViewById(R.id.toolbar))
-
         setupCategoryRecycler()
         setupProductRecycler()
         observeProductViewModel()
+        setupNewProductRecycler()
 
+        val bannerImageView: ImageView = findViewById(R.id.bannerImage)
+        bannerImageView.load("https://images.all-free-download.com/images/thumbjpg/ecommerce_website_banner_template_shoppers_sketch_6920121.jpg") {
+            crossfade(true)
+            transformations(RoundedCornersTransformation(16f))
+        }
         productViewModel.getAllProducts()
 
         val name = intent.getStringExtra("name")
@@ -54,25 +62,25 @@ class Home : AppCompatActivity() {
         intent.putExtra("school", "Addis Ababa University")
         setResult(RESULT_OK, intent)
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    // Already on Home
-                    true
-                }
-                R.id.navigation_dashboard -> {
-                    startActivity(Intent(this, Login::class.java))
-                    true
-                }
-                R.id.navigation_notifications -> {
-                    startActivity(Intent(this, Login::class.java))
-                    true
-                }
-                else -> false
-            }
+        binding.fabCart.setOnClickListener {
+            startActivity(Intent(this, CartActivity::class.java))
         }
+        productViewModel.products.observe(this, Observer { productList ->
+            allProducts = productList ?: listOf()
+
+            productCardAdapter.updateProducts(allProducts)
+
+            val newProducts = allProducts.takeLast(5) // or filter using createdAt
+            newProductCardAdapter.updateProducts(newProducts)
+        })
+        val cartBadge: TextView = findViewById(R.id.cart_badge)
+
+        cartViewModel.cartItems.observe(this) { items ->
+            cartBadge.text = items.size.toString()
+            cartBadge.visibility = if (items.isNotEmpty()) View.VISIBLE else View.GONE
+        }
+
+
 
     }
 
@@ -88,15 +96,10 @@ class Home : AppCompatActivity() {
             intent.putExtra("category_slug", category.id.toString()) // use slug or id as needed
             startActivity(intent)
         }
-
-
-
-
         circularImageTextRecyclerView = findViewById(R.id.circularImageTextRecyclerView)
         circularImageTextRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         circularImageTextRecyclerView.adapter = circularImageTextAdapter
     }
-
     private fun setupProductRecycler() {
         productCardRecyclerView = findViewById(R.id.productsCardRecyclerView)
         productCardRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -124,6 +127,33 @@ class Home : AppCompatActivity() {
         )
         productCardRecyclerView.adapter = productCardAdapter
     }
+    private fun setupNewProductRecycler() {
+        newProductCardRecyclerView = findViewById(R.id.productsCardRecyclerView2)
+        newProductCardRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        newProductCardAdapter = ProductCardAdapter(
+            productList = listOf(),
+            Screen = "New", // optional label if you handle different screens
+            onAddToCartClicked = { product ->
+                val item = CartItem(
+                    productId = product.id.toString(),
+                    name = product.name,
+                    price = product.price,
+                    imageUrl = product.images?.firstOrNull()?.path ?: "",
+                    quantity = 1
+                )
+                cartViewModel.addItem(item)
+            },
+            onClick = { product ->
+                val intent = Intent(this, ProductDetail::class.java)
+                intent.putExtra("product", product)
+                startActivity(intent)
+                Toast.makeText(this, "Clicked: ${product.name}", Toast.LENGTH_SHORT).show()
+            }
+        )
+        newProductCardRecyclerView.adapter = newProductCardAdapter
+    }
+
 
     private fun observeProductViewModel() {
         productViewModel.products.observe(this, Observer { productList ->
@@ -150,6 +180,7 @@ class Home : AppCompatActivity() {
             val searchView = searchItem.actionView as? SearchView
             searchView?.isIconified = false
 
+            // Styling the search view
             val searchPlate = searchView?.findViewById<View>(androidx.appcompat.R.id.search_plate)
             searchPlate?.setBackgroundResource(R.drawable.rounded_search_background)
 
@@ -172,31 +203,26 @@ class Home : AppCompatActivity() {
                     return true
                 }
             })
-
-            val cartItem = it.findItem(R.id.action_cart)
-            val actionView = cartItem?.actionView
-            val cartBadge = actionView?.findViewById<TextView>(R.id.cart_badge)
-            cartViewModel.cartItems.observe(this) { items ->
-                cartBadge?.text = items.size.toString()
-                cartBadge?.visibility = if (items.isNotEmpty()) View.VISIBLE else View.GONE
-            }
-
-            actionView?.setOnClickListener {
-                onOptionsItemSelected(cartItem)
-            }
         }
         return true
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_cart -> {
-                startActivity(Intent(this, CartActivity::class.java))
+            R.id.action_logout -> {  // Replace this ID with logout action ID in `menu_main.xml`
+                val sessionManager = SessionManager(this)
+                sessionManager.clearSession()
+                startActivity(Intent(this, Login::class.java))
+                finish()  // finish Home activity
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+
+
 
     private fun performSearch(query: String) {
 //        val filtered = allProducts.filter {

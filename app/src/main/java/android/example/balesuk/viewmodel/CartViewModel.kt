@@ -1,4 +1,4 @@
-package android.example.balesuk.ui.viewmodel
+package android.example.balesuk.viewmodel
 
 import android.example.balesuk.model.CartItem
 import android.example.balesuk.data.repository.CartRepository

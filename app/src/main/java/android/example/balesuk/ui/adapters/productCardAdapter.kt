@@ -2,7 +2,6 @@ package android.example.balesuk.ui.adapters
 
 import Products
 import android.example.balesuk.R
-import android.example.balesuk.data.models.Product
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,10 +44,12 @@ class ProductCardAdapter(
         }
 
         fun bind(product: Products) {
-            product.images?.firstOrNull()?.path?.let { url ->
-                productImage.load(url) {
-                    crossfade(true)
-                }
+            val imageUrl = product.images?.firstOrNull()?.path
+                ?: "https://images.unsplash.com/photo-1668440241163-9227a86a86bc?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHByb2R1Y3QlMjBzYW1wbGV8ZW58MHx8MHx8fDA%3D"
+
+            productImage.load(imageUrl) {
+                crossfade(true)
+                        // Optional: add error fallback
             }
 
             productName.text = product.name
@@ -58,6 +59,7 @@ class ProductCardAdapter(
                 onAddToCartClicked(product)
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductCardViewHolder {

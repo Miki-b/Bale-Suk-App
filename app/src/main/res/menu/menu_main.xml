@@ -7,8 +7,7 @@
     app:showAsAction="collapseActionView|ifRoom"
     app:actionViewClass="androidx.appcompat.widget.SearchView" />
     <item
-        android:id="@+id/action_cart"
-        android:title="Cart"
-        app:actionLayout="@layout/cart_action_view"
-        app:showAsAction="always"/>
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        />
 </menu>
